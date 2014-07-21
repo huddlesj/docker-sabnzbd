@@ -24,6 +24,6 @@ VOLUME /data
 ADD ./start.sh /start.sh
 RUN chmod u+x  /start.sh
 
-EXPOSE 8080 9090
+EXPOSE 8080 9191
 
 ENTRYPOINT ["/start.sh"]
