@@ -1,3 +1,7 @@
+#
+# build a docker container to run sabnzbd
+#
+
 FROM rednut/ubuntu:latest
 MAINTAINER dotcomstu <dotcomstu@gmail.com>
 
