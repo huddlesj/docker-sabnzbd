@@ -2,11 +2,12 @@ docker sabnzbd
 ==============
 
 This is a Dockerfile to set up "SABnzbd" - (http://sabnzbd.org/)
+based on work by git@github.com:timhaak/docker-sabnzbd.git
 
 Build from docker file
 
 ```
-git clone git@github.com:timhaak/docker-sabnzbd.git
+git clone git@github.com:rednut/docker-sabnzbd.git
 cd docker-sabnzbd
 docker build -t sabnzbd . 
 ```
