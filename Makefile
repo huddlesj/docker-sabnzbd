@@ -1,18 +1,27 @@
 NAME = rednut/sabnzbd
-VERSION = 0.0.1
+VERSION = $(shell cat VERSION)
 
 .PHONY: all build test tag_latest release ssh
 
 all: build
 
-build:
+up: build_quick tag_latest run ip
+
+build: version_bump build_clean tag_latest 
+
+
+build_quick:
 	docker build -t="$(NAME):$(VERSION)" --rm .
 
-test:
-	env NAME=$(NAME) VERSION=$(VERSION) ./test/runner.sh
+build_clean:
+	docker build -t="$(NAME):$(VERSION)" --rm --no-cache .
+
 
 tag_latest:
 	docker tag $(NAME):$(VERSION) $(NAME):latest
+
+version_bump:
+	VERSION inc
 
 release: test tag_latest
 	@if ! docker images $(NAME) | awk '{ print $$2 }' | grep -q -F $(VERSION); then echo "$(NAME) version $(VERSION) is not yet built. Please run 'make build'"; false; fi
@@ -26,7 +35,7 @@ run:
 		-v /srv/data/apps/docker/sabnzbd/config:/config \
 		-v /srv/data/apps/docker/sabnzbd/data:/data \
 		-p 8085:8080 -p 9191:9191 \
-		rednut/sabnzbd
+		rednut/sabnzbd:latest
 
 ip:
 	@ID=$$(docker ps | grep -F "$(NAME):$(VERSION)" | awk '{ print $$1 }') && \

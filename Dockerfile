@@ -16,7 +16,7 @@ RUN apt-get -qy --force-yes dist-upgrade
 
 #RUN apt-get -q update
 
-RUN apt-get install -qy --force-yes sabnzbdplus sabnzbdplus-theme-classic sabnzbdplus-theme-mobile sabnzbdplus-theme-plush par2 python-yenc unrar unzip 
+RUN apt-get install -qy --force-yes sabnzbdplus sabnzbdplus-theme-classic sabnzbdplus-theme-mobile sabnzbdplus-theme-plush par2 python-yenc unrar unzip lsb-release
 
 VOLUME /config
 VOLUME /data
