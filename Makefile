@@ -1,9 +1,16 @@
-NAME = rednut/sabnzbd
+APP = sabnzbd
+NAME = rednut/$(APP)
 VERSION = $(shell cat VERSION)
 
 .PHONY: all build test tag_latest release ssh
 
 all: build
+
+
+clean:
+	@docker stop $(APP)
+	@docker rm $(APP)
+
 
 up: build_quick tag_latest run ip
 
