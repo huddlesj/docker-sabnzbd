@@ -29,7 +29,7 @@ RUN	apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 16126D3A3E5C119
 RUN 	apt-mark hold initscripts udev plymouth mountall
 RUN 	apt-get update && \
 	apt-get -qy --force-yes dist-upgrade
-RUN 	apt-get install -q -y curl wget supervisor apt-utils lsb-release curl wget rsync zip unzip unrar par2 \
+RUN 	apt-get install -q -y curl wget supervisor apt-utils lsb-release curl wget rsync zip unzip unrar par2 util-linux \
 			python-yenc unrar unzip lsb-release sabnzbdplus  sabnzbdplus-theme-classic sabnzbdplus-theme-iphone \
 			sabnzbdplus-theme-mobile sabnzbdplus-theme-plush sabnzbdplus-theme-smpl python-cheetah python-configobj \
 			python-feedparser sabnzbdplus-theme-plush python-dbus python-notify sabnzbdplus-theme-mobile par2 python-yenc \
