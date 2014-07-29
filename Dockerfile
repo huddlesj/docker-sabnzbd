@@ -22,11 +22,13 @@ RUN ln -sf /bin/true /sbin/initctl
 RUN locale-gen en_GB en_GB.UTF-8
 
 # set correct time zone
-RUN echo "Europe/London" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+RUN	echo "Europe/London" > /etc/timezone && \
+	dpkg-reconfigure -f noninteractive tzdata
 
-
-RUN apt-mark hold initscripts udev plymouth mountall
-RUN apt-get -qy --force-yes dist-upgrade
+RUN	apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 16126D3A3E5C1192
+RUN 	apt-mark hold initscripts udev plymouth mountall
+RUN 	apt-get update && \
+	apt-get -qy --force-yes dist-upgrade
 RUN 	apt-get install -q -y curl wget supervisor apt-utils lsb-release curl wget rsync zip unzip unrar par2 \
 			python-yenc unrar unzip lsb-release sabnzbdplus  sabnzbdplus-theme-classic sabnzbdplus-theme-iphone \
 			sabnzbdplus-theme-mobile sabnzbdplus-theme-plush sabnzbdplus-theme-smpl python-cheetah python-configobj \
