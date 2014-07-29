@@ -5,18 +5,34 @@
 FROM rednut/ubuntu:latest
 MAINTAINER dotcomstu <dotcomstu@gmail.com>
 
-# RUN mkdir -p /etc/apt/apt.conf.d/ && echo 'Acquire::http { Proxy "http://10.9.1.9:3142"; };' >> /etc/apt/apt.conf.d/01proxy
+# make apt non-interactive
+ENV DEBIAN_FRONTEND noninteractive
+
+# add ubuntu repos
+ADD ./apt/ubuntu-sources.list /etc/apt/sources.list
+
+# use local apt cache
+RUN mkdir -p /etc/apt/apt.conf.d/ && echo 'Acquire::http { Proxy "http://10.9.1.9:3142"; };' >> /etc/apt/apt.conf.d/01proxy
+
+# Keep upstart from complaining
+RUN dpkg-divert --local --rename --add /sbin/initctl
+RUN ln -sf /bin/true /sbin/initctl
+
+# set locale
+RUN locale-gen en_GB en_GB.UTF-8
+
+# set correct time zone
+RUN echo "Europe/London" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu precise universe multiverse" >> /etc/apt/sources.list
-
-RUN apt-get -q update
-##RUN apt-mark hold initscripts udev plymouth mountall
+RUN apt-mark hold initscripts udev plymouth mountall
 RUN apt-get -qy --force-yes dist-upgrade
+RUN 	apt-get install -q -y curl wget supervisor apt-utils lsb-release curl wget rsync zip unzip unrar par2 \
+			python-yenc unrar unzip lsb-release sabnzbdplus  sabnzbdplus-theme-classic sabnzbdplus-theme-iphone \
+			sabnzbdplus-theme-mobile sabnzbdplus-theme-plush sabnzbdplus-theme-smpl python-cheetah python-configobj \
+			python-feedparser sabnzbdplus-theme-plush python-dbus python-notify sabnzbdplus-theme-mobile par2 python-yenc \
+			 unrar rar unzip 
 
-#RUN apt-get -q update
-
-RUN apt-get install -qy --force-yes sabnzbdplus sabnzbdplus-theme-classic sabnzbdplus-theme-mobile sabnzbdplus-theme-plush par2 python-yenc unrar unzip lsb-release
 
 VOLUME /config
 VOLUME /data
@@ -27,3 +43,18 @@ RUN chmod u+x  /start.sh
 EXPOSE 8080 9191
 
 ENTRYPOINT ["/start.sh"]
+
+
+
+
+
+
+
+
+###RUN echo "deb http://archive.ubuntu.com/ubuntu precise universe multiverse" >> /etc/apt/sources.list
+###RUN apt-get -q update
+##RUN apt-mark hold initscripts udev plymouth mountall
+##RUN apt-get -qy --force-yes dist-upgrade
+#RUN apt-get -q update
+#RUN apt-get install -qy --force-yes sabnzbdplus sabnzbdplus-theme-classic sabnzbdplus-theme-mobile sabnzbdplus-theme-plush par2 python-yenc unrar unzip lsb-release
+
