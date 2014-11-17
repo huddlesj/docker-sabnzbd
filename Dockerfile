@@ -12,7 +12,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ADD ./apt/ubuntu-sources.list /etc/apt/sources.list
 
 # use local apt cache
-RUN mkdir -p /etc/apt/apt.conf.d/ && echo 'Acquire::http { Proxy "http://apt-cacher-ng:3142"; };' >> /etc/apt/apt.conf.d/01proxy
+#RUN mkdir -p /etc/apt/apt.conf.d/ && echo 'Acquire::http { Proxy "http://apt-cacher-ng:3142"; };' >> /etc/apt/apt.conf.d/01proxy
 
 # Keep upstart from complaining
 RUN dpkg-divert --local --rename --add /sbin/initctl
